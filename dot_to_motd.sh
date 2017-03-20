@@ -8,7 +8,7 @@ transparent_before="255;0;255"
 transparent_after="16;16;16"
 
 # convert image to ppm and output to stdout
-ppm=$(conbert ${1:-a} -compress none ppm:- 2>/dev/null)
+ppm=$(convert ${1:-a} -compress none ppm:- 2>/dev/null)
 
 # convert error check
 if [ -z "${ppm}" ] ; then
@@ -38,9 +38,9 @@ shift 4
 
         # start a new line when reach cols
         if [ $(( (${i} + 2) / 3 % ${cols} )) -eq 0 ] ; then
-          echo "[48;2;${rgb}m  [m"
+          echo -e "\033[48;2;${rgb}m  \033[m"
         else
-          printf "[48;2;${rgb}m  [m"
+          echo -en "\033[48;2;${rgb}m  \033[m"
         fi
     done
 } >/etc/motd
